@@ -7,9 +7,7 @@
   <body>
     <div id="container">{{{body}}}</div>
     <script type="text/javascript" src="/lib/require.js"></script>
-    <script id="initialData" type="text/template">
-    var str = "{{initialData}}"
-    </script>
+    {{{initialData}}}
     <script type="text/javascript">
     require.config({
     	baseUrl: 'js',
@@ -18,6 +16,7 @@
     		'react': '/lib/react.min'
     	}
     })
+    {{test}}
     </script>
   </body>
 </html>

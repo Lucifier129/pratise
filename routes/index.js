@@ -3,6 +3,8 @@ var router = express.Router()
 var React = require('react')
 var util = require('util')
 
+var initialDataString = require('./initialData.json')
+
 var Body = React.createClass({displayName: "Body",
 	render: function() {
 		return (
@@ -11,22 +13,20 @@ var Body = React.createClass({displayName: "Body",
 	}
 })
 
-var initialData = {
-	data: 'a string body create by React.js from server'
-}
-
+var initialData = JSON.parse(initialDataString)
 var body = React.renderToString(React.createElement(Body, null, initialData.data))
-
-
+var initialDataScript= React.createElement("script", {id: "initialData", type: "text/json"}, initialDataString)
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', {
-  	title: 'test react server render',
-  	body: body,
-  	initialData: JSON.stringify(initialData)
-  })
+	var data = {
+		title: 'test react server render',
+		body: body,
+		initialData: React.renderToStaticMarkup(initialDataScript)
+	}
+	console.log(data)
+	res.render('index', data)
 })
 
 module.exports = router
