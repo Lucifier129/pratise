@@ -5,7 +5,7 @@ var React = require('react')
 var Body = React.createClass({displayName: "Body",
 	render: function() {
 		return (
-			React.createElement("h1", null, this.props.name)
+			React.createElement("h1", {className: "head"}, this.props.name)
 			)
 	}
 })
@@ -17,7 +17,7 @@ var body = React
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' })
+  res.render('index', { title: 'Expasdfasdfasdfress' })
 })
 
 module.exports = router
