@@ -5,9 +5,11 @@
     <link rel='stylesheet' href='/css/style.css' />
   </head>
   <body>
-    {{{body}}}
-    <script type="text/javascript" data-main="{{app}}" src="/lib/require.js"></script>
-    <script id="initialData"></script>
+    <div id="container">{{{body}}}</div>
+    <script type="text/javascript" src="/lib/require.js"></script>
+    <script id="initialData" type="text/template">
+    var str = "{{initialData}}"
+    </script>
     <script type="text/javascript">
     require.config({
     	baseUrl: 'js',
