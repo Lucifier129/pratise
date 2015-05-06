@@ -14,8 +14,10 @@
     "gulp": "^3.8.11",
     "gulp-webpack": "^1.4.0",
     "hbs": "~2.9.0",
+    "material-ui": "^0.7.5",
     "morgan": "~1.5.1",
     "react": "^0.13.2",
+    "react-tap-event-plugin": "^0.1.6",
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {

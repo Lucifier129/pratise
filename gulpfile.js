@@ -47,14 +47,16 @@ function hanldePromiseList(promiseList, message) {
 
 gulp.task('server_jsx', function() {
     return gulp.src(task.jsx.server.src)
-    .pipe(react())
-    .pipe(gulp.dest(task.jsx.server.dest))
+        .pipe(react())
+        .pipe(gulp.dest(task.jsx.server.dest))
+        .on('error', console.log.bind(console))
 })
 
 gulp.task('client_jsx', function() {
     return gulp.src(task.jsx.client.src)
-    .pipe(react())
-    .pipe(gulp.dest(task.jsx.client.dest))
+        .pipe(react())
+        .pipe(gulp.dest(task.jsx.client.dest))
+        .on('error', console.log.bind(console))
 })
 
 //打包文件
@@ -83,23 +85,23 @@ gulp.task('watch', function() {
     var tasks = []
 
     tasks.push({
-    	src: task.jsx.server.src,
-    	taskName: 'server_jsx'
+        src: task.jsx.server.src,
+        taskName: 'server_jsx'
     })
 
     tasks.push({
-    	src: task.jsx.client.src,
-    	taskName: 'client_jsx'
+        src: task.jsx.client.src,
+        taskName: 'client_jsx'
     })
 
     tasks.push({
-    	src: webpackConfig.entry.app[0],
-    	taskName: 'build'
+        src: webpackConfig.entry.app[0],
+        taskName: 'build'
     })
 
     tasks.forEach(function(item) {
-    	var watcher = gulp.watch(item.src, [].concat(item.taskName))
-    	watcher.on('change', function(event) {
+        var watcher = gulp.watch(item.src, [].concat(item.taskName))
+        watcher.on('change', function(event) {
             console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
         })
     })
