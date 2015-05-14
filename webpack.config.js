@@ -2,17 +2,22 @@ module.exports = {
   cache: true,
 
   entry: {
-    'app': ['./static/js/app.js']
+    'index': ['index/app.jsx']
   },
 
   output: {
-    filename: '[name].js'
+    filename: '[name].bundle.js'
   },
 
+  module: {
+    loaders: [
+      { test: /\.jsx$/, exclude: /node_modules/, loader: "jsx-loader?harmony"}
+    ]
+  },
   resolve: {
-    root: __dirname,
-    alias: {
-      'jquery': 'static/lib/jquery-2.1.3.min.js'
-    }
+    // you can now require('file') instead of require('file.coffee')
+    extensions: ["", ".js", ".jsx"],
+    root: __dirname + '/public/js/src',
+    modulesDirectories: ["node_modules"]
   }
 }

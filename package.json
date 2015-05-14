@@ -11,18 +11,19 @@
     "debug": "~2.1.1",
     "es6-promise": "^2.1.1",
     "express": "^4.12.3",
+    "flux": "^2.0.0",
     "gulp": "^3.8.11",
     "gulp-webpack": "^1.4.0",
     "hbs": "~2.9.0",
-    "material-ui": "^0.7.5",
+    "json-server": "^0.7.6",
+    "jsx-loader": "^0.12.2",
     "morgan": "~1.5.1",
+    "node-jsx": "^0.13.3",
     "react": "^0.13.2",
     "react-tap-event-plugin": "^0.1.6",
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
-    "gulp-concat": "^2.5.2",
-    "gulp-react": "^3.0.1",
     "gulp-uglify": "^1.2.0"
   }
 }

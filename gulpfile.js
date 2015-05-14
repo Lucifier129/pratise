@@ -1,28 +1,18 @@
 var gulp = require('gulp');
-var react = require('gulp-react')
-var concat = require('gulp-concat')
 var uglify = require("gulp-uglify")
 var webpack = require('gulp-webpack')
 var Promise = require('es6-promise').Promise
 var webpackConfig = require('./webpack.config.js')
+var path = require('path')
 
-var task = {
-    'jsx': {
-        server: {
-            src: './routes_jsx/*.js',
-            dest: './routes'
-        },
-        client: {
-            src: './static/jsx/*',
-            dest: './static/js'
-        }
-    },
-    'build': {
-        app: {
-            dev: './static',
-            dest: './public/js'
-        }
-    }
+var buildConfig = {
+    src: 'public/js/src',
+    dest: 'public/js/dest'
+}
+
+var watchConfig = {
+    src: ['public/js/src/*.js[x]', 'public/js/src/**/*.js[x]'],
+    task: ['build']
 }
 
 function hanldePromiseList(promiseList, message) {
@@ -44,32 +34,18 @@ function hanldePromiseList(promiseList, message) {
     })
 }
 
-
-gulp.task('server_jsx', function() {
-    return gulp.src(task.jsx.server.src)
-        .pipe(react())
-        .pipe(gulp.dest(task.jsx.server.dest))
-        .on('error', console.log.bind(console))
-})
-
-gulp.task('client_jsx', function() {
-    return gulp.src(task.jsx.client.src)
-        .pipe(react())
-        .pipe(gulp.dest(task.jsx.client.dest))
-        .on('error', console.log.bind(console))
-})
-
 //打包文件
-gulp.task('build', ['client_jsx'], function() {
+gulp.task('build', function() {
     var promiseList = []
+    var entryKeys = Object.keys(webpackConfig.entry)
 
-    Object.keys(webpackConfig.entry).forEach(function(key) {
+    entryKeys.forEach(function(key) {
         var promise = new Promise(function(resolve, reject) {
             gulp.src(webpackConfig.entry[key][0])
                 .pipe(webpack(webpackConfig))
-                .pipe(gulp.dest(task.build[key].dev))
+                .pipe(gulp.dest(buildConfig.src))
                 .pipe(uglify())
-                .pipe(gulp.dest(task.build[key].dest))
+                .pipe(gulp.dest(buildConfig.dest))
                 .on('end', resolve)
                 .on('error', reject)
         })
@@ -80,32 +56,9 @@ gulp.task('build', ['client_jsx'], function() {
 })
 
 
-//Rerun the task when a file changes
-gulp.task('watch', function() {
-    var tasks = []
-
-    tasks.push({
-        src: task.jsx.server.src,
-        taskName: 'server_jsx'
-    })
-
-    tasks.push({
-        src: task.jsx.client.src,
-        taskName: 'client_jsx'
-    })
-
-    tasks.push({
-        src: webpackConfig.entry.app[0],
-        taskName: 'build'
-    })
-
-    tasks.forEach(function(item) {
-        var watcher = gulp.watch(item.src, [].concat(item.taskName))
-        watcher.on('change', function(event) {
-            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-        })
+gulp.task('default', ['build'], function() {
+    var watcher = gulp.watch(watchConfig.src, watchConfig.task)
+    watcher.on('change', function(event) {
+        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     })
 })
-
-
-gulp.task('default', ['server_jsx', 'client_jsx', 'build', 'watch'])
