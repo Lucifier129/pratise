@@ -2,7 +2,7 @@ module.exports = {
   cache: true,
 
   entry: {
-    'index': ['index/app.jsx']
+    'index': ['index/app.js']
   },
 
   output: {
@@ -11,12 +11,13 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.jsx$/, exclude: /node_modules/, loader: "jsx-loader?harmony"}
+      // { test: /\.jsx$/, exclude: /node_modules/, loader: "jsx-loader?harmony"},
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}
     ]
   },
   resolve: {
     // you can now require('file') instead of require('file.coffee')
-    extensions: ["", ".js", ".jsx"],
+    extensions: ["", ".js", ".jsx", '.es6'],
     root: __dirname + '/public/js/src',
     modulesDirectories: ["node_modules"]
   }

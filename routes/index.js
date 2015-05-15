@@ -1,7 +1,7 @@
-require('node-jsx').install({extension: '.jsx'})
+require('node-jsx').install({extension: '.jsx', harmony: true})
 var express = require('express')
 var router = express.Router()
-var body = require('../public/js/src/index/app')
+var body = require('../public/js/src/index/server')
 
 var initialData = {
 	content: 'render by React from server side'

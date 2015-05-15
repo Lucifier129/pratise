@@ -11,7 +11,7 @@ var buildConfig = {
 }
 
 var watchConfig = {
-    src: ['public/js/src/*.js[x]', 'public/js/src/**/*.js[x]'],
+    src: ['public/js/src/*.js', 'public/js/src/**/*.js'],
     task: ['build']
 }
 
