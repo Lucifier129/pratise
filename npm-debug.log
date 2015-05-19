@@ -10,7 +10,7 @@
 7 info start pratise@0.0.0
 8 verbose unsafe-perm in lifecycle true
 9 info pratise@0.0.0 Failed to exec start script
-10 verbose stack Error: pratise@0.0.0 start: `babel-node ./app.js`
+10 verbose stack Error: pratise@0.0.0 start: `babel-node ./bin/www`
 10 verbose stack Exit status 1
 10 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:213:16)
 10 verbose stack     at EventEmitter.emit (events.js:110:17)
@@ -25,13 +25,13 @@
 15 error node v0.12.0
 16 error npm  v2.5.1
 17 error code ELIFECYCLE
-18 error pratise@0.0.0 start: `babel-node ./app.js`
+18 error pratise@0.0.0 start: `babel-node ./bin/www`
 18 error Exit status 1
-19 error Failed at the pratise@0.0.0 start script 'babel-node ./app.js'.
+19 error Failed at the pratise@0.0.0 start script 'babel-node ./bin/www'.
 19 error This is most likely a problem with the pratise package,
 19 error not with npm itself.
 19 error Tell the author that this fails on your system:
-19 error     babel-node ./app.js
+19 error     babel-node ./bin/www
 19 error You can get their info via:
 19 error     npm owner ls pratise
 19 error There is likely additional logging output above.

@@ -1,9 +1,11 @@
-var gulp = require('gulp');
+var gulp = require('gulp')
+var del = require('del')
 var uglify = require("gulp-uglify")
 var webpack = require('gulp-webpack')
 var Promise = require('es6-promise').Promise
 var webpackConfig = require('./webpack.config.js')
-var path = require('path')
+
+var debug = true
 
 var buildConfig = {
     src: 'public/js/src',
@@ -11,8 +13,12 @@ var buildConfig = {
 }
 
 var watchConfig = {
-    src: ['public/js/src/*.js', 'public/js/src/**/*.js'],
+    src: ['public/js/src/**/*.js'],
     task: ['build']
+}
+
+var delConfig = {
+    path: ['public/js/dest/**/*.js']
 }
 
 function hanldePromiseList(promiseList, message) {
@@ -34,16 +40,25 @@ function hanldePromiseList(promiseList, message) {
     })
 }
 
+gulp.task('clean', function(cb) {
+    del(delConfig.path, cb)
+})
+
 //打包文件
-gulp.task('build', function() {
+gulp.task('build', ['clean'], function() {
     var promiseList = []
     var entryKeys = Object.keys(webpackConfig.entry)
 
     entryKeys.forEach(function(key) {
         var promise = new Promise(function(resolve, reject) {
-            gulp.src(webpackConfig.entry[key][0])
+            var stream = gulp.src(webpackConfig.entry[key][0])
                 .pipe(webpack(webpackConfig))
-                .pipe(gulp.dest(buildConfig.src))
+
+            if (debug) {
+                stream = stream.pipe(gulp.dest(buildConfig.src))
+            }
+
+            stream
                 .pipe(uglify())
                 .pipe(gulp.dest(buildConfig.dest))
                 .on('end', resolve)

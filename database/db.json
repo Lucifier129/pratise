@@ -1,0 +1,31 @@
+{
+  "Administrator": "Jade Gu",
+  "todos": {
+    "12314124123123123": {
+      "id": "12314124123123123",
+      "title": "default title",
+      "time": "default time",
+      "completed": false
+    }
+  },
+  "todo": {
+    "12314124123123123": {
+      "id": "12314124123123123",
+      "title": "default title",
+      "time": "default time",
+      "completed": false
+    }
+  },
+  "todosa": {},
+  "todosb": [
+    {
+      "a": 1,
+      "id": 1
+    },
+    {
+      "a": 1,
+      "asdfasdf": 1123123,
+      "id": 2
+    }
+  ]
+}

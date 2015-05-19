@@ -2,7 +2,8 @@ module.exports = {
   cache: true,
 
   entry: {
-    'index': ['index/app.js']
+    // 'index': ['index/app.js'],
+    'todomvc': ['todomvc/app.js']
   },
 
   output: {
@@ -12,7 +13,7 @@ module.exports = {
   module: {
     loaders: [
       // { test: /\.jsx$/, exclude: /node_modules/, loader: "jsx-loader?harmony"},
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader?optional[]=runtime'}
     ]
   },
   resolve: {
