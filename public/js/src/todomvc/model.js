@@ -1,3 +1,5 @@
+import request from 'superagent'
+
 export default class Model {
 	constructor(todos) {
 		this.todos = todos
@@ -13,29 +15,44 @@ export default class Model {
 			time: now.toLocaleDateString(),
 			completed: false
 		}
-		this.todos[todo.id] = todo
-		return todo
+		this.todos.push(todo)
+		request.post('/todos').send(todo).end(console.log.bind(console))
+	}
+	find (query) {
+			var result = []
+			var todo
+			this.todos.forEach(function(todo) {
+				if (todo[query.name] == query.value) {
+					result.push(todo)
+				}
+			})
+			return result
 	}
 	getTodo(id) {
+		for (var i = Things.length - 1; i >= 0; i--) {
+			Things[i]
+		};
 		return this.todos[id]
 	}
 	removeTodo(id) {
+		request.del('/todos/' + id).end()
 		return delete this.todos[id]
 	}
 	updateTodo(newTodo) {
 		let todo = this.getTodo(newTodo.id)
 		if (todo) {
 			Object.assign(todo, newTodo)
+			request.patch('/todos/' + todo.id).send(todo).end(console.log.bind(console))
 		}
 	}
 	eachTodo(handle) {
 		let todos = this.getTodos()
 		Object.keys(todos).forEach((id) => handle(todos[id], id, todos))
 	}
-	clearCompleted() {
+	clearCompleted(handle) {
 		this.eachTodo((todo, id, todos) => {
 			if (todo.completed) {
-				delete todos[id]
+				this.removeTodo(id)
 			}
 		})
 	}
@@ -59,8 +76,11 @@ export default class Model {
 	}
 	setStateForAll(state) {
 		let todos = this.getTodos()
-		console.log(todos)
-		Object.keys(todos).forEach((id) => todos[id].completed = state)
+		Object.keys(todos).forEach((id) => {
+			let todo = todos[id]
+			todo.completed = state
+			request.patch('/todos/' + todo.id).send(todo).end(console.log.bind(console))
+		})
 	}
 	getData(hash) {
 		let mapping = {
@@ -70,8 +90,8 @@ export default class Model {
 		}
 		return {
 			hash: hash,
-			completedCount: this.getCompleted().length,
-			todoCount: this.getActive().length,
+			completedCount: Object.keys(this.getCompleted()).length,
+			todoCount: Object.keys(this.getActive()).length,
 			todos: this[mapping[hash]]()
 		}
 	}

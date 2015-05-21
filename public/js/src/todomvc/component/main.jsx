@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Todos from './todos'
 import actions from '../actions'
 export default class Main extends React.Component {

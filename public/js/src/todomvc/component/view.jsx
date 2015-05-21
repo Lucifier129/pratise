@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import NewTodo from './newTodo'
 import Main from './main'
 import Filters from './filters'

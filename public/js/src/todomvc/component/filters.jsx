@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import actions from '../actions'
 export default class Filters extends React.Component {
 	getClassName(name) {

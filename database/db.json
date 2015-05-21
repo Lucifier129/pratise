@@ -1,31 +1,25 @@
 {
   "Administrator": "Jade Gu",
-  "todos": {
-    "12314124123123123": {
-      "id": "12314124123123123",
-      "title": "default title",
-      "time": "default time",
-      "completed": false
-    }
-  },
-  "todo": {
-    "12314124123123123": {
-      "id": "12314124123123123",
-      "title": "default title",
-      "time": "default time",
-      "completed": false
-    }
-  },
-  "todosa": {},
-  "todosb": [
+  "ids": [],
+  "todos": [
     {
-      "a": 1,
-      "id": 1
+      "id": 1432201627441,
+      "title": "asdfasdfasdf",
+      "time": "2015/5/21",
+      "completed": false
     },
     {
-      "a": 1,
-      "asdfasdf": 1123123,
-      "id": 2
+      "id": 1432201628385,
+      "title": "asdfasdfasdf",
+      "time": "2015/5/21",
+      "completed": false
+    },
+    {
+      "id": 1432201629424,
+      "title": "asdfasdf",
+      "time": "2015/5/21",
+      "completed": false
     }
-  ]
+  ],
+  "js": []
 }

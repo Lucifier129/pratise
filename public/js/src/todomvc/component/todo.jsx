@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import actions from '../actions'
 let ENTER_KEY = 13
 let ESCAPE_KEY = 27
@@ -70,7 +70,7 @@ export default class Todo extends React.Component {
 				<div className="view">
 					<input className="toggle" type="checkbox" onChange={(e) => this.toggleTodo(e)} checked={this.props.completed} />
 					<label onDoubleClick={(e) => this.handleDblclick(e)}>{this.props.title}</label>
-					<button className="destroy" onClick={(e) => this.removeTodo(e)}></button>
+					<button className="destroy" onClick={() => this.removeTodo()}></button>
 				</div>
 				<input className="edit" onBlur={(e) => this.handleBlur(e)} onKeyUp={(e) => this.handleKeyup(e)} ref="editor" />
 			</li>

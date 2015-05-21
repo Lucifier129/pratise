@@ -21,12 +21,12 @@ var actions =  {
 	removeTodo: function(id) {
 		todoDispatcher.dispatch({
 			actionType: 'removeTodo',
-			todo: id
+			id: id
 		})
 	},
 	clearCompleted: function() {
 		todoDispatcher.dispatch({
-			actionType: 'clearCompleted',
+			actionType: 'clearCompleted'
 		})
 	}
 }
