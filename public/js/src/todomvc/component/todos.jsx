@@ -3,8 +3,7 @@ import Todo from './todo'
 
 export default class Todos extends React.Component {
 	render() {
-		let todos = this.props.todos
-		let todoList = Object.keys(todos).map((id) => <Todo key={id} {...todos[id]} />)
+		let todoList = this.props.todos.map((todo) => <Todo key={todo.id} {...todo} />)
 		return <ul id="todo-list">{todoList}</ul>
 	}
 }

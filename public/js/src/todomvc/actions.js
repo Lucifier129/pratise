@@ -1,34 +1,32 @@
 import todoDispatcher from './todoDispatcher'
-var actions =  {
-	addTodo: function(title) {
+export default {
+	addTodo(title) {
 		todoDispatcher.dispatch({
 			actionType: 'addTodo',
 			title: title
 		})
 	},
-	toggleAll: function(completed) {
+	toggleAll(completed) {
 		todoDispatcher.dispatch({
 			actionType: 'toggleAll',
 			completed: completed
 		})
 	},
-	updateTodo: function(todo) {
+	updateTodo(todo) {
 		todoDispatcher.dispatch({
 			actionType: 'updateTodo',
 			todo: todo
 		})
 	},
-	removeTodo: function(id) {
+	removeTodo(id) {
 		todoDispatcher.dispatch({
 			actionType: 'removeTodo',
 			id: id
 		})
 	},
-	clearCompleted: function() {
+	clearCompleted() {
 		todoDispatcher.dispatch({
 			actionType: 'clearCompleted'
 		})
 	}
 }
-
-export default actions

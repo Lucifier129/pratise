@@ -4,9 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var APP = require('../app');
 var debug = require('debug')('pratise:server');
-var http = require('http');
+var app = APP.app;
+var server = APP.server;
 
 /**
  * Get port from environment and store in Express.
@@ -14,13 +15,6 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
 /**
  * Listen on provided port, on all network interfaces.
  */

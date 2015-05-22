@@ -1,5 +1,3 @@
-import request from 'superagent'
-
 export default class Model {
 	constructor(todos) {
 		this.todos = todos
@@ -16,71 +14,84 @@ export default class Model {
 			completed: false
 		}
 		this.todos.push(todo)
-		request.post('/todos').send(todo).end(console.log.bind(console))
+		return todo
 	}
-	find (query) {
-			var result = []
-			var todo
-			this.todos.forEach(function(todo) {
-				if (todo[query.name] == query.value) {
-					result.push(todo)
-				}
-			})
-			return result
+	find(query) {
+		let result = []
+		this.todos.forEach((todo) => {
+			if (todo[query.name] == query.value) {
+				result.push(todo)
+			}
+		})
+		return result
 	}
 	getTodo(id) {
-		for (var i = Things.length - 1; i >= 0; i--) {
-			Things[i]
-		};
-		return this.todos[id]
+		return this.find({
+			name: 'id',
+			value: id
+		})[0]
 	}
 	removeTodo(id) {
-		request.del('/todos/' + id).end()
-		return delete this.todos[id]
+		let index = this.todos.indexOf(this.getTodo(id))
+		if (index >= 0) {
+			this.todos.splice(index, 1)
+		}
 	}
 	updateTodo(newTodo) {
 		let todo = this.getTodo(newTodo.id)
 		if (todo) {
 			Object.assign(todo, newTodo)
-			request.patch('/todos/' + todo.id).send(todo).end(console.log.bind(console))
+			return todo
 		}
 	}
-	eachTodo(handle) {
-		let todos = this.getTodos()
-		Object.keys(todos).forEach((id) => handle(todos[id], id, todos))
-	}
-	clearCompleted(handle) {
-		this.eachTodo((todo, id, todos) => {
-			if (todo.completed) {
-				this.removeTodo(id)
-			}
-		})
-	}
 	getCompleted() {
-		let result = {}
-		this.eachTodo((todo, id) => {
-			if (todo.completed) {
-				result[id] = todo
-			}
+		return this.find({
+			name: 'completed',
+			value: true
 		})
-		return result
+	}
+	clearCompleted() {
+		let todos = this.todos
+		if (todos.length === 0) {
+			return false
+		}
+		for (let i = todos.length - 1; i >= 0; i--) {
+			let todo = todos[i]
+			if (todo.completed) {
+				todos.splice(i, 1)
+			}
+		}
+		return true
 	}
 	getActive() {
-		let result = {}
-		this.eachTodo((todo, id) => {
-			if (!todo.completed) {
-				result[id] = todo
-			}
+		return this.find({
+			name: 'completed',
+			value: false
 		})
-		return result
 	}
-	setStateForAll(state) {
-		let todos = this.getTodos()
-		Object.keys(todos).forEach((id) => {
-			let todo = todos[id]
+	toggleAll(state) {
+		var todos = this.getTodos()
+		if (todos.length === 0) {
+			return false
+		}
+		todos.forEach((todo) => {
 			todo.completed = state
-			request.patch('/todos/' + todo.id).send(todo).end(console.log.bind(console))
 		})
+		return true
+	}
+	isAllCompleted() {
+		let isAllCompleted = true
+		let todos = this.todos
+		if (todos.length === 0) {
+			return false
+		}
+		for (let i = todos.length - 1; i >= 0; i--) {
+			if (!todos[i].completed) {
+				isAllCompleted = false
+				break
+			}
+		}
+		return isAllCompleted
 	}
 	getData(hash) {
 		let mapping = {
@@ -90,8 +101,9 @@ export default class Model {
 		}
 		return {
 			hash: hash,
-			completedCount: Object.keys(this.getCompleted()).length,
-			todoCount: Object.keys(this.getActive()).length,
+			isAllCompleted: this.isAllCompleted(),
+			completedCount: this.getCompleted().length,
+			todoCount: this.getActive().length,
 			todos: this[mapping[hash]]()
 		}
 	}

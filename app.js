@@ -4,9 +4,7 @@ var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var jsonServer = require('json-server')
 
-var dbRouter = jsonServer.router('database/db.json')
 var routes = require('./routes/index')
 var users = require('./routes/users')
 var todos = require('./routes/todos')
@@ -29,10 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', routes)
 app.use('/users', users)
 app.use('/todomvc', todos)
-
-//db middlewares
-app.use(jsonServer.defaults) // logger, static and cors middlewares
-app.use(dbRouter) // Mount router on '/'
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,4 +60,12 @@ app.use(function(err, req, res, next) {
 })
 
 
-module.exports = app
+var server = require('http').createServer(app)
+var io = require('socket.io')(server)
+var store = require('./routes/todos-store')
+store.io = io
+
+module.exports = {
+  app: app,
+  server: server
+}
